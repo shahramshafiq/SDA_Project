@@ -1,0 +1,49 @@
+Fully Dressed Use Case - Modify or Cancel Reservation
+
+Use Case Name: Modify or Cancel Reservation
+Scope: INNsight Hotel Booking System
+Level: User-Goal
+Primary Actor: Customer
+Stakeholders and Interests: Customer, Admin
+
+Main Success Scenario
+Actor Action                                          | System Response
+------------------------------------------------------|------------------------------------------------------
+1. Customer types cancellation message, e.g.:         |
+   "cancel booking 7"                                 |
+                                                      | 2. ChatController receives POST /api/chat request
+                                                      | 3. ChatbotService.processMessage() invokes
+                                                      |    IntentParser.parse(); CANCEL_BOOKING intent
+                                                      |    detected (keyword: "cancel")
+                                                      | 4. handleCancelBooking() applies CANCEL_PATTERN
+                                                      |    regex to extract the booking ID from the
+                                                      |    message (include UC-05: Provide Booking Details)
+                                                      | 5. BookingService.cancelBooking(id) is called
+                                                      | 6. BookingRepository.findById(id) retrieves the
+                                                      |    existing Booking record
+                                                      | 7. System sets booking.setStatus(CANCELLED) and
+                                                      |    sets room.setAvailable(true)
+                                                      | 8. BookingRepository.save() and
+                                                      |    RoomRepository.save() commit changes to the
+                                                      |    H2 database
+                                                      |    (include UC-08: Update Reservation Database)
+                                                      | 9. System responds: "Booking #<id> has been
+                                                      |    successfully cancelled."
+10. Customer receives cancellation confirmation       |
+
+Extensions
+1. Booking ID not found -> BookingRepository.findById() returns empty ->
+   BookingService throws IllegalArgumentException("Booking not found") ->
+   System returns "Cancellation failed: Booking not found"
+2. CANCEL_PATTERN does not match message ->
+   System returns: "To cancel, please use: 'cancel booking <id>'"
+3. Booking is already CANCELLED -> System returns appropriate error message
+
+Pre-conditions
+- Customer has a booking they wish to cancel
+- The booking exists in the H2 database with a known booking ID
+
+Post-conditions
+- The booking record's status is updated to CANCELLED in the database
+- The associated room's isAvailable flag is set back to true
+- Customer has received a cancellation confirmation message

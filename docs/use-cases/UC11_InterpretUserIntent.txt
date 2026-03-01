@@ -1,0 +1,54 @@
+Fully Dressed Use Case - Interpret User Intent
+
+Use Case Name: Interpret User Intent
+Scope: INNsight Hotel Booking System
+Level: Sub-Function
+Primary Actor: AI Receptionist System
+Stakeholders and Interests: Customer, AI Receptionist System
+
+Main Success Scenario
+Actor Action                                          | System Response
+------------------------------------------------------|------------------------------------------------------
+                                                      | 1. ChatbotService.processMessage(message) receives
+                                                      |    the raw user input string
+                                                      | 2. System calls IntentParser.parse(message)
+                                                      | 3. IntentParser converts message to lowercase
+                                                      |    for case-insensitive matching
+                                                      | 4. System checks message against intent keywords
+                                                      |    in priority order:
+                                                      |    - "hello"/"hi"/"hey"  -> GREETING
+                                                      |    - "help"              -> HELP
+                                                      |    - "cancel"            -> CANCEL_BOOKING
+                                                      |    - "my booking"/
+                                                      |      "list booking"/
+                                                      |      "show booking"/
+                                                      |      "all booking"      -> LIST_BOOKINGS
+                                                      |    - "book"/"reserve"   -> BOOK_ROOM
+                                                      |    - "available"/"room"/
+                                                      |      "check"            -> CHECK_AVAILABILITY
+                                                      |    - (no match)         -> UNKNOWN
+                                                      | 5. Detected Intent enum value is returned
+                                                      |    to ChatbotService
+                                                      | 6. ChatbotService switch expression routes to
+                                                      |    the corresponding handler method
+
+Extensions
+1. Message is null or blank ->
+   IntentParser.parse() returns UNKNOWN ->
+   ChatbotService returns: "I'm sorry, I didn't understand that.
+   Type 'help' for available commands."
+2. Ambiguous message matching multiple keywords ->
+   First matching rule in priority order wins
+   (e.g., "cancel booking list" -> CANCEL_BOOKING due to higher priority)
+3. Mixed case message ->
+   toLowerCase() normalises input before matching;
+   intent detected correctly regardless of capitalisation
+
+Pre-conditions
+- Natural language input has been received and processed by ChatController (UC-06)
+- The message string is non-null (null handling done inside IntentParser)
+
+Post-conditions
+- An Intent enum value (GREETING, HELP, CHECK_AVAILABILITY, BOOK_ROOM, CANCEL_BOOKING,
+  LIST_BOOKINGS, or UNKNOWN) has been determined
+- ChatbotService routes execution to the correct handler based on the identified intent

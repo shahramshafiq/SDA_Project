@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- System Boundary -->
+    <mxCell id="2" value="INNsight Hotel Booking System" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.flowchart.start_2;fillColor=#f9f0ff;strokeColor=#9673a6;fontSize=14;fontStyle=1;verticalAlign=top;align=center;" vertex="1" parent="1">
+      <mxGeometry x="300" y="80" width="900" height="900" as="geometry" />
+    </mxCell>
+
+    <!-- Actors -->
+    <!-- Customer (left) -->
+    <mxCell id="10" value="Customer" style="shape=mxgraph.uml.actor;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+      <mxGeometry x="80" y="350" width="60" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- Staff/Admin (bottom-left) -->
+    <mxCell id="11" value="Staff/Admin" style="shape=mxgraph.uml.actor;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+      <mxGeometry x="80" y="700" width="60" height="100" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System (right) -->
+    <mxCell id="12" value="AI Receptionist&#xa;System" style="shape=mxgraph.uml.actor;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="1280" y="350" width="80" height="110" as="geometry" />
+    </mxCell>
+
+    <!-- Use Cases (inside system boundary) -->
+    <!-- UC1: Initiate Conversation -->
+    <mxCell id="20" value="Initiate Conversation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="380" y="140" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC2: Request Information -->
+    <mxCell id="21" value="Request Information" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="620" y="140" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC3: Make Room Reservation -->
+    <mxCell id="22" value="Make Room Reservation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="380" y="270" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC4: Modify/Cancel Reservation -->
+    <mxCell id="23" value="Modify/Cancel Reservation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="380" y="380" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC5: Provide Booking Details -->
+    <mxCell id="24" value="Provide Booking Details" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="620" y="320" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC6: Process Natural Language Input -->
+    <mxCell id="25" value="Process Natural Language Input" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="860" y="270" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC7: Validate Booking Information -->
+    <mxCell id="26" value="Validate Booking Information" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="860" y="380" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC8: Update Reservation Database -->
+    <mxCell id="27" value="Update Reservation Database" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="620" y="500" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC9: Extract Booking Information -->
+    <mxCell id="28" value="Extract Booking Information" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="860" y="500" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC10: Manage Room Inventory -->
+    <mxCell id="29" value="Manage Room Inventory" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="380" y="700" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC11: Interpret User Intent -->
+    <mxCell id="30" value="Interpret User Intent" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="860" y="140" width="220" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- UC12: Monitor Booking Records -->
+    <mxCell id="31" value="Monitor Booking Records" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+      <mxGeometry x="620" y="700" width="200" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Relationships between Use Cases -->
+
+    <!-- UC1 <<extend>> UC2 -->
+    <mxCell id="40" value="&lt;&lt;extend&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;" edge="1" source="20" target="21" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC3 <<include>> UC5 -->
+    <mxCell id="41" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;" edge="1" source="22" target="24" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC4 <<include>> UC5 -->
+    <mxCell id="42" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;" edge="1" source="23" target="24" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC5 <<include>> UC6 -->
+    <mxCell id="43" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;" edge="1" source="24" target="25" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- UC8 <<include>> UC7 -->
+    <mxCell id="44" value="&lt;&lt;include&gt;&gt;" style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;" edge="1" source="27" target="26" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Actor-to-Use-Case connections -->
+
+    <!-- Customer -> UC1 -->
+    <mxCell id="50" value="" style="endArrow=none;" edge="1" source="10" target="20" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Customer -> UC3 -->
+    <mxCell id="51" value="" style="endArrow=none;" edge="1" source="10" target="22" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Customer -> UC4 -->
+    <mxCell id="52" value="" style="endArrow=none;" edge="1" source="10" target="23" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Customer -> UC5 -->
+    <mxCell id="53" value="" style="endArrow=none;" edge="1" source="10" target="24" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Staff/Admin -> UC8 -->
+    <mxCell id="54" value="" style="endArrow=none;" edge="1" source="11" target="27" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Staff/Admin -> UC10 -->
+    <mxCell id="55" value="" style="endArrow=none;" edge="1" source="11" target="29" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Staff/Admin -> UC12 -->
+    <mxCell id="56" value="" style="endArrow=none;" edge="1" source="11" target="31" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System -> UC2 -->
+    <mxCell id="57" value="" style="endArrow=none;" edge="1" source="12" target="21" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System -> UC4 -->
+    <mxCell id="58" value="" style="endArrow=none;" edge="1" source="12" target="23" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System -> UC6 -->
+    <mxCell id="59" value="" style="endArrow=none;" edge="1" source="12" target="25" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System -> UC7 -->
+    <mxCell id="60" value="" style="endArrow=none;" edge="1" source="12" target="26" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System -> UC9 -->
+    <mxCell id="61" value="" style="endArrow=none;" edge="1" source="12" target="28" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System -> UC11 -->
+    <mxCell id="62" value="" style="endArrow=none;" edge="1" source="12" target="30" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- AI Receptionist System -> UC8 -->
+    <mxCell id="63" value="" style="endArrow=none;" edge="1" source="12" target="27" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Team member label -->
+    <mxCell id="99" value="Shahram Shafiq (24i-2541) | Sara Nasir (24i-0719) | Taha Jabbar (24i-0816)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="400" y="1020" width="700" height="30" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

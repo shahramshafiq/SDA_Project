@@ -1,0 +1,42 @@
+Fully Dressed Use Case - Process Natural Language Input
+
+Use Case Name: Process Natural Language Input
+Scope: INNsight Hotel Booking System
+Level: Sub-Function
+Primary Actor: AI Receptionist System
+Stakeholders and Interests: Customer, AI Receptionist System
+
+Main Success Scenario
+Actor Action                                          | System Response
+------------------------------------------------------|------------------------------------------------------
+1. Customer submits a text message via the chat UI    |
+                                                      | 2. Browser sends HTTP POST request to /api/chat
+                                                      |    with JSON body {"message": "<user text>"}
+                                                      | 3. ChatController.chat() receives the request
+                                                      |    and extracts the message string
+                                                      | 4. ChatController delegates to
+                                                      |    ChatbotService.processMessage(message)
+                                                      | 5. ChatbotService passes the raw text to
+                                                      |    IntentParser.parse() for intent detection
+                                                      |    (UC-11: Interpret User Intent)
+                                                      | 6. ChatbotService executes the appropriate
+                                                      |    handler based on detected intent
+                                                      | 7. Handler generates a natural language response
+                                                      | 8. ChatController returns the response as JSON
+                                                      |    {"response": "<chatbot reply>"}
+9. Chat UI renders the response to the customer       |
+
+Extensions
+1. Empty or blank message -> IntentParser.parse() receives null/blank ->
+   IntentParser returns UNKNOWN -> System replies with generic help prompt
+2. Extremely long message -> System processes normally;
+   regex patterns match relevant substrings only
+3. HTTP request malformed -> Spring returns 400 Bad Request before reaching ChatbotService
+
+Pre-conditions
+- A message has been submitted by the customer via the chat interface
+- The Spring Boot application is running and the /api/chat endpoint is active
+
+Post-conditions
+- The raw natural language input has been processed end-to-end
+- An appropriate response has been sent back to the customer

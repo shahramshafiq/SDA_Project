@@ -1,0 +1,36 @@
+Fully Dressed Use Case - Initiate Conversation
+
+Use Case Name: Initiate Conversation
+Scope: INNsight Hotel Booking System
+Level: User-Goal
+Primary Actor: Customer
+Stakeholders and Interests: Customer, AI Receptionist System
+
+Main Success Scenario
+Actor Action                                          | System Response
+------------------------------------------------------|------------------------------------------------------
+1. Customer navigates to localhost:8080 in browser    |
+                                                      | 2. System loads chat interface (index.html)
+3. Customer types a greeting (e.g., "hello")          |
+                                                      | 4. ChatController receives POST /api/chat request
+                                                      | 5. ChatbotService.processMessage() is invoked
+                                                      | 6. IntentParser.parse() detects GREETING intent
+                                                      | 7. System responds: "Hello! Welcome to INNsight
+                                                      |    Hotel. How can I assist you today?"
+8. Customer reads the welcome message                 |
+                                                      | 9. System extends to Request Information if
+                                                      |    customer asks for help
+
+Extensions
+1. System unavailable -> Customer sees connection error in browser
+2. Customer sends empty message -> IntentParser returns UNKNOWN intent ->
+   System replies: "I'm sorry, I didn't understand that. Type 'help' for available commands."
+3. Customer sends unrecognised greeting -> UNKNOWN intent -> System prompts 'help'
+
+Pre-conditions
+- INNsight Hotel Booking System is running on localhost:8080
+- Customer has a web browser and network access to the server
+
+Post-conditions
+- Conversation session is established
+- Customer has received a welcome message and is ready to interact with the chatbot
