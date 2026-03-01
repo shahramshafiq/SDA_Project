@@ -1,0 +1,54 @@
+Fully Dressed Use Case - Make Room Reservation
+
+Use Case Name: Make Room Reservation
+Scope: INNsight Hotel Booking System
+Level: User-Goal
+Primary Actor: Customer
+Stakeholders and Interests: Customer, Admin, AI Receptionist System
+
+Main Success Scenario
+Actor Action                                          | System Response
+------------------------------------------------------|------------------------------------------------------
+1. Customer sends booking message, e.g.:              |
+   "book room 101 for John from 2025-03-01            |
+    to 2025-03-05"                                    |
+                                                      | 2. ChatController receives POST /api/chat request
+                                                      | 3. ChatbotService.processMessage() invokes
+                                                      |    IntentParser.parse(); BOOK_ROOM intent detected
+                                                      |    (keyword: "book" or "reserve")
+                                                      | 4. handleBookRoom() applies BOOK_PATTERN regex to
+                                                      |    extract roomNumber, guestName, checkIn, checkOut
+                                                      |    (include UC-05: Provide Booking Details)
+                                                      | 5. BookingService.createBooking() is called
+                                                      |    (include UC-07: Validate Booking Information)
+                                                      | 6. RoomRepository.findByRoomNumber() confirms room
+                                                      |    exists and room.isAvailable() returns true
+                                                      | 7. Booking is saved via BookingRepository.save()
+                                                      |    with status CONFIRMED; room marked unavailable
+                                                      |    (include UC-08: Update Reservation Database)
+                                                      | 8. System responds: "Booking confirmed!
+                                                      |    Booking #<id> — Room <num> for <guest>.
+                                                      |    Check-in: <date>, Check-out: <date>."
+9. Customer receives booking confirmation             |
+
+Extensions
+1. Invalid message format -> BOOK_PATTERN does not match ->
+   System shows: "To book a room, please use the format:
+   'book room <number> for <guest name> from <YYYY-MM-DD> to <YYYY-MM-DD>'"
+2. Room not found -> RoomRepository returns empty ->
+   BookingService throws IllegalArgumentException -> System shows: "Booking failed: Room not found"
+3. Room already booked -> room.isAvailable() returns false ->
+   System shows: "Booking failed: Room <num> is not available"
+4. Invalid date format -> LocalDate.parse() throws DateTimeParseException ->
+   System shows: "Booking failed: Invalid date format"
+5. Check-out date before check-in date -> BookingService validates dates ->
+   System shows appropriate error message
+
+Pre-conditions
+- Customer has initiated a conversation with the chatbot
+- At least one room exists and is available in the system (seeded by DataInitializer)
+
+Post-conditions
+- A new Booking record is created in the H2 database with status CONFIRMED
+- The reserved room's isAvailable flag is set to false
+- Customer has received a confirmation message including the booking ID

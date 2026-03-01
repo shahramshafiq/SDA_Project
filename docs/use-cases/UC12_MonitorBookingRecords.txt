@@ -1,0 +1,53 @@
+Fully Dressed Use Case - Monitor Booking Records
+
+Use Case Name: Monitor Booking Records
+Scope: INNsight Hotel Booking System
+Level: User-Goal
+Primary Actor: Staff/Admin
+Stakeholders and Interests: Admin, Customer
+
+Main Success Scenario
+Actor Action                                          | System Response
+------------------------------------------------------|------------------------------------------------------
+1. Admin sends GET /api/bookings to view all          |
+   booking records                                    |
+                                                      | 2. BookingController.getAllBookings() receives
+                                                      |    the HTTP request
+                                                      | 3. System calls BookingService.getAllBookings()
+                                                      |    which invokes BookingRepository.findAll()
+                                                      | 4. System retrieves all Booking records from
+                                                      |    the H2 database
+                                                      | 5. System returns JSON list of bookings, each
+                                                      |    containing: id, guestName, room, checkInDate,
+                                                      |    checkOutDate, status (CONFIRMED/CANCELLED)
+6. Admin reviews the booking list                     |
+
+Via chatbot (Customer flow):
+Actor Action                                          | System Response
+------------------------------------------------------|------------------------------------------------------
+7. Customer types "list bookings" or                  |
+   "show my bookings"                                 |
+                                                      | 8. IntentParser.parse() detects LIST_BOOKINGS
+                                                      |    intent (keywords: "my booking",
+                                                      |    "list booking", "show booking", "all booking")
+                                                      | 9. ChatbotService.handleListBookings() calls
+                                                      |    BookingService.getAllBookings()
+                                                      | 10. System formats booking list as readable text
+                                                      |     and returns it in the chat response
+11. Customer reads the displayed booking records      |
+
+Extensions
+1. No bookings exist in the database ->
+   BookingRepository.findAll() returns empty list ->
+   System responds: "There are no bookings in the system."
+2. Database read error ->
+   DataAccessException thrown ->
+   System returns 500 Internal Server Error or generic error message
+
+Pre-conditions
+- INNsight Hotel Booking System is running
+- Database is accessible (bookings may or may not exist)
+
+Post-conditions
+- All current booking records are displayed to Admin or Customer
+- No data is modified; this is a read-only (view) operation
