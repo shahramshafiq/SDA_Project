@@ -1,49 +1,25 @@
 Fully Dressed Use Case - Provide Booking Details
 
-Use Case Name: Provide Booking Details
-Scope: INNsight Hotel Booking System
-Level: Sub-Function
-Primary Actor: Customer
-Stakeholders and Interests: Customer, AI Receptionist System
+Use Case Name:                    Provide Booking Details
+Scope:                            INNsight Hotel Booking System
+Level:                            User-Goal
+Primary Actor:                    Customer
+Stakeholders and Interests:       Customer, AI Receptionist System
 
 Main Success Scenario
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-1. Customer provides booking details in a single      |
-   natural language message, e.g.:                    |
-   "book room 101 for John from 2025-03-01            |
-    to 2025-03-05"                                    |
-                                                      | 2. ChatbotService receives the message and begins
-                                                      |    detail extraction
-                                                      | 3. BOOK_PATTERN regex extracts:
-                                                      |    - roomNumber (group 1)
-                                                      |    - guestName (group 2)
-                                                      |    - checkInDate (group 3)
-                                                      |    - checkOutDate (group 4)
-                                                      | 4. System constructs a BookingRequest DTO
-                                                      |    containing all extracted fields
-5. Customer provides cancellation details, e.g.:      |
-   "cancel booking 7"                                 |
-                                                      | 6. CANCEL_PATTERN regex extracts bookingId (group 1)
-                                                      | 7. System prepares cancellation request with
-                                                      |    the extracted booking ID
-                                                      | 8. Details forwarded to Validate Booking
-                                                      |    Information (UC-07) for further processing
+Actor Action                                    | System Response
+------------------------------------------------|------------------------------------------------
+Customer enters their name                      | System records the name
+Customer enters preferred room type and dates   | System captures the room preference and dates
+Customer reviews the provided details           | System asks for confirmation
+Customer confirms the details                   | System acknowledges and stores the information
 
 Extensions
-1. Booking message format incorrect -> BOOK_PATTERN does not match ->
-   System prompts: "To book a room, please use the format:
-   'book room <number> for <guest name> from <YYYY-MM-DD> to <YYYY-MM-DD>'"
-2. Cancellation message format incorrect -> CANCEL_PATTERN does not match ->
-   System prompts: "To cancel, please use: 'cancel booking <id>'"
-3. Customer omits required fields (e.g., no dates) ->
-   Regex group extraction fails -> System requests correct format
+1. Customer provides incomplete details -> System asks for the missing information
+2. Customer changes a detail -> System updates the captured information
 
 Pre-conditions
-- Customer is in a booking or cancellation flow
-- Customer's message has been received by ChatbotService
+Customer is in a booking or cancellation flow
 
 Post-conditions
-- All required booking details (room number, guest name, dates) or cancellation details
-  (booking ID) are captured
-- A BookingRequest DTO or booking ID is ready for validation and database processing
+All necessary booking details have been captured by the system

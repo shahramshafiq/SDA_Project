@@ -1,36 +1,24 @@
 Fully Dressed Use Case - Request Information
 
-Use Case Name: Request Information
-Scope: INNsight Hotel Booking System
-Level: User-Goal
-Primary Actor: Customer
-Stakeholders and Interests: Customer, AI Receptionist System
+Use Case Name:                    Request Information
+Scope:                            INNsight Hotel Booking System
+Level:                            User-Goal
+Primary Actor:                    Customer
+Stakeholders and Interests:       Customer, AI Receptionist System
 
 Main Success Scenario
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-1. Customer types "help" or asks for assistance       |
-                                                      | 2. ChatController receives POST /api/chat request
-                                                      | 3. ChatbotService.processMessage() is invoked
-                                                      | 4. IntentParser.parse() detects HELP intent
-                                                      |    (keyword: "help")
-                                                      | 5. System calls handleHelp() method
-                                                      | 6. System returns list of available commands:
-                                                      |    "show rooms", "book room", "cancel booking",
-                                                      |    "list bookings"
-7. Customer reads the help information                |
-8. Customer selects a command to proceed              |
+Actor Action                                    | System Response
+------------------------------------------------|------------------------------------------------
+Customer asks what the system can do            | System lists available options
+Customer selects a topic to learn more about    | System provides details on that topic
+Customer confirms they understand               | System waits for the next request
 
 Extensions
-1. Customer sends an unrecognised request -> IntentParser returns UNKNOWN intent ->
-   System replies: "I'm sorry, I didn't understand that. Type 'help' for available commands."
-2. Customer asks for help immediately after greeting ->
-   System extends from Initiate Conversation (UC-01) and responds with help text
+1. Customer asks an unrecognized question -> System suggests available options
+2. Customer provides no input -> System re-displays the list of available features
 
 Pre-conditions
-- Conversation has been initiated (UC-01 completed)
-- System is running and accessible
+A conversation with the system has already been initiated
 
 Post-conditions
-- Customer has received a list of available system commands and capabilities
-- Customer is ready to use a specific feature of the booking system
+Customer is informed about the available features and options

@@ -1,49 +1,24 @@
 Fully Dressed Use Case - Manage Room Inventory
 
-Use Case Name: Manage Room Inventory
-Scope: INNsight Hotel Booking System
-Level: User-Goal
-Primary Actor: Staff/Admin
-Stakeholders and Interests: Admin, AI Receptionist System
+Use Case Name:                    Manage Room Inventory
+Scope:                            INNsight Hotel Booking System
+Level:                            User-Goal
+Primary Actor:                    Staff/Admin
+Stakeholders and Interests:       Admin
 
 Main Success Scenario
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-1. On application startup, DataInitializer seeds      |
-   initial rooms into the database                    |
-                                                      | 2. DataInitializer creates Room entities with:
-                                                      |    roomNumber, type (SINGLE/DOUBLE/SUITE),
-                                                      |    pricePerNight, isAvailable = true
-                                                      | 3. RoomRepository.saveAll() persists all
-                                                      |    seed rooms to the H2 database
-4. Admin sends GET /api/rooms to view all rooms       |
-                                                      | 5. RoomController.getAllRooms() calls
-                                                      |    RoomService.getAllRooms()
-                                                      | 6. System returns JSON list of all Room entities
-7. Admin sends GET /api/rooms/available to check      |
-   which rooms are currently free                     |
-                                                      | 8. RoomController calls
-                                                      |    RoomService.getAvailableRooms()
-                                                      | 9. System filters rooms where isAvailable = true
-                                                      |    and returns the filtered list
-10. Admin updates room details as needed              |
-                                                      | 11. RoomService.save(room) persists changes
-                                                      |     via RoomRepository
+Actor Action                                    | System Response
+------------------------------------------------|------------------------------------------------
+Admin logs in and accesses room management      | System displays current room inventory
+Admin adds, updates, or removes a room          | System validates the room details
+Admin confirms the changes                      | System updates the room inventory
 
 Extensions
-1. Duplicate room number on creation ->
-   Database unique constraint violation ->
-   System returns 409 Conflict or appropriate error
-2. Invalid room type provided ->
-   Enum mapping fails -> System returns 400 Bad Request
-3. No rooms available -> getAvailableRooms() returns empty list ->
-   Chatbot responds: "Sorry, there are no available rooms at the moment."
+1. Room number already exists -> System alerts admin and asks for a different number
+2. Admin tries to remove a booked room -> System prevents removal and shows a warning
 
 Pre-conditions
-- Admin has access to the system (API or application startup)
-- INNsight Hotel Booking System is running
+Admin is logged in and has access to the room management section
 
 Post-conditions
-- Room inventory is up to date in the H2 database
-- Room availability correctly reflects current booking states
-- Admin can view accurate room listings via the REST API
+Room inventory is updated with the latest room details
