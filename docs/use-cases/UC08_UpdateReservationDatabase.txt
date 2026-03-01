@@ -1,59 +1,24 @@
 Fully Dressed Use Case - Update Reservation Database
 
-Use Case Name: Update Reservation Database
-Scope: INNsight Hotel Booking System
-Level: Sub-Function
-Primary Actor: Staff/Admin
-Stakeholders and Interests: Customer, Admin, AI Receptionist System
+Use Case Name:                    Update Reservation Database
+Scope:                            INNsight Hotel Booking System
+Level:                            User-Goal
+Primary Actor:                    Staff/Admin
+Stakeholders and Interests:       Customer, Admin, AI Receptionist System
 
 Main Success Scenario
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-                                                      | 1. BookingService.createBooking() has validated
-                                                      |    booking information (UC-07 completed)
-                                                      | 2. System creates a new Booking entity with:
-                                                      |    guestName, room, checkInDate, checkOutDate,
-                                                      |    status = CONFIRMED
-                                                      | 3. BookingRepository.save(booking) persists the
-                                                      |    Booking record to the H2 database
-                                                      | 4. System sets room.setAvailable(false) to mark
-                                                      |    the room as no longer available
-                                                      | 5. RoomRepository.save(room) persists the updated
-                                                      |    room availability to the database
-                                                      | 6. Database transaction commits successfully
-                                                      |    (@Transactional ensures atomicity)
-                                                      | 7. System returns the saved Booking object
-                                                      |    (with generated ID) to ChatbotService
-8. ChatbotService formats and sends confirmation      |
-   message to the customer                            |
-
-For cancellation:
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-1. Staff/Admin or chatbot triggers cancellation       |
-                                                      | 2. BookingService.cancelBooking(id) retrieves
-                                                      |    booking by ID via BookingRepository.findById()
-                                                      | 3. System sets booking.setStatus(CANCELLED)
-                                                      | 4. System sets room.setAvailable(true) so the
-                                                      |    room can be booked again
-                                                      | 5. BookingRepository.save(booking) and
-                                                      |    RoomRepository.save(room) commit changes
-                                                      | 6. System confirms cancellation to the caller
+Actor Action                                    | System Response
+------------------------------------------------|------------------------------------------------
+System receives validated booking details       | System saves the reservation record
+                                                | System updates room availability
+System confirms the record has been saved       | Customer receives a booking confirmation
 
 Extensions
-1. Database write failure -> DataAccessException thrown ->
-   Transaction rolls back; System returns error response
-2. Concurrent booking conflict -> Two customers book same room simultaneously ->
-   Second transaction sees room unavailable; validation (UC-07) rejects duplicate
-3. Booking ID not found during cancellation ->
-   BookingService throws IllegalArgumentException("Booking not found") ->
-   System returns "Cancellation failed: Booking not found"
+1. Database is unavailable -> System shows an error and retries
+2. Duplicate reservation detected -> System alerts staff and cancels the duplicate
 
 Pre-conditions
-- Booking information has been validated (UC-07 completed)
-- Database connection is active
+Booking information has been validated successfully
 
 Post-conditions
-- New booking record exists in the H2 database with status CONFIRMED, OR
-- Existing booking record updated to status CANCELLED
-- Room availability flag updated to reflect current booking state
+The database is updated with the new reservation and room availability is current

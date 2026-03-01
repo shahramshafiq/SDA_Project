@@ -1,55 +1,26 @@
 Fully Dressed Use Case - Extract Booking Information
 
-Use Case Name: Extract Booking Information
-Scope: INNsight Hotel Booking System
-Level: Sub-Function
-Primary Actor: AI Receptionist System
-Stakeholders and Interests: Customer, AI Receptionist System
+Use Case Name:                    Extract Booking Information
+Scope:                            INNsight Hotel Booking System
+Level:                            User-Goal
+Primary Actor:                    AI Receptionist System
+Stakeholders and Interests:       Customer, AI Receptionist System
 
 Main Success Scenario
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-                                                      | 1. ChatbotService.handleBookRoom(message) is
-                                                      |    invoked after BOOK_ROOM intent detected
-                                                      | 2. System applies BOOK_PATTERN regex:
-                                                      |    "(?:book|reserve)\s+room\s+(\S+)\s+for\s+
-                                                      |    (.+?)\s+from\s+(\S+)\s+to\s+(\S+)"
-                                                      | 3. Matcher.find() locates the pattern in the
-                                                      |    user's message
-                                                      | 4. System extracts:
-                                                      |    - group(1): roomNumber (e.g., "101")
-                                                      |    - group(2): guestName (e.g., "John Smith")
-                                                      |    - group(3): checkInDate (e.g., "2025-03-01")
-                                                      |    - group(4): checkOutDate (e.g., "2025-03-05")
-                                                      | 5. System constructs BookingRequest DTO with
-                                                      |    extracted values
-                                                      | 6. BookingRequest passed to
-                                                      |    BookingService.createBooking()
-
-For cancellation:
-                                                      | 7. ChatbotService.handleCancelBooking(message)
-                                                      |    applies CANCEL_PATTERN regex:
-                                                      |    "cancel\s+(?:booking\s+)?(\d+)"
-                                                      | 8. System extracts group(1): bookingId (e.g., "7")
-                                                      | 9. bookingId passed to
-                                                      |    BookingService.cancelBooking(id)
-10. Extracted data used for validation and DB update  |
+Actor Action                                    | System Response
+------------------------------------------------|------------------------------------------------
+System identifies the user's intent             | System scans the message for relevant details
+                                                | System extracts room number or type
+                                                | System extracts guest name and dates
+                                                | System extracts booking ID if present
+System compiles the extracted data              | Data is forwarded for validation
 
 Extensions
-1. BOOK_PATTERN does not match message ->
-   Matcher.find() returns false ->
-   System returns: "To book a room, please use the format:
-   'book room <number> for <guest name> from <YYYY-MM-DD> to <YYYY-MM-DD>'"
-2. CANCEL_PATTERN does not match message ->
-   System returns: "To cancel, please use: 'cancel booking <id>'"
-3. Partial match (e.g., guest name contains unexpected characters) ->
-   Regex groups may not capture correctly -> System returns format help
+1. Key details are missing -> System asks the customer to provide the missing information
+2. Conflicting details found -> System asks the customer to clarify
 
 Pre-conditions
-- User intent has been identified as BOOK_ROOM or CANCEL_BOOKING by IntentParser (UC-11)
-- The user's raw message string is available to ChatbotService
+User intent has been identified (booking or cancellation)
 
 Post-conditions
-- For booking: a BookingRequest DTO is populated with roomNumber, guestName,
-  checkInDate, and checkOutDate
-- For cancellation: a numeric booking ID is extracted and ready for processing
+Structured booking data has been extracted from the customer's message

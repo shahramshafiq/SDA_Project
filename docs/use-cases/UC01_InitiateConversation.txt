@@ -1,36 +1,24 @@
 Fully Dressed Use Case - Initiate Conversation
 
-Use Case Name: Initiate Conversation
-Scope: INNsight Hotel Booking System
-Level: User-Goal
-Primary Actor: Customer
-Stakeholders and Interests: Customer, AI Receptionist System
+Use Case Name:                    Initiate Conversation
+Scope:                            INNsight Hotel Booking System
+Level:                            User-Goal
+Primary Actor:                    Customer
+Stakeholders and Interests:       Customer, AI Receptionist System
 
 Main Success Scenario
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-1. Customer navigates to localhost:8080 in browser    |
-                                                      | 2. System loads chat interface (index.html)
-3. Customer types a greeting (e.g., "hello")          |
-                                                      | 4. ChatController receives POST /api/chat request
-                                                      | 5. ChatbotService.processMessage() is invoked
-                                                      | 6. IntentParser.parse() detects GREETING intent
-                                                      | 7. System responds: "Hello! Welcome to INNsight
-                                                      |    Hotel. How can I assist you today?"
-8. Customer reads the welcome message                 |
-                                                      | 9. System extends to Request Information if
-                                                      |    customer asks for help
+Actor Action                                    | System Response
+------------------------------------------------|------------------------------------------------
+Customer opens the chatbot interface            | System displays a welcome message
+Customer sends a greeting message               | System responds with a greeting
+Customer indicates they need assistance         | System asks how it can help
 
 Extensions
-1. System unavailable -> Customer sees connection error in browser
-2. Customer sends empty message -> IntentParser returns UNKNOWN intent ->
-   System replies: "I'm sorry, I didn't understand that. Type 'help' for available commands."
-3. Customer sends unrecognised greeting -> UNKNOWN intent -> System prompts 'help'
+1. System is unavailable -> Customer sees an error message
+2. Customer sends an empty message -> System prompts customer to type something
 
 Pre-conditions
-- INNsight Hotel Booking System is running on localhost:8080
-- Customer has a web browser and network access to the server
+The INNsight Hotel Booking System is accessible and running
 
 Post-conditions
-- Conversation session is established
-- Customer has received a welcome message and is ready to interact with the chatbot
+A conversation session has been started between the customer and the system

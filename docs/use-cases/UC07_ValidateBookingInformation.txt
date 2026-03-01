@@ -1,47 +1,27 @@
 Fully Dressed Use Case - Validate Booking Information
 
-Use Case Name: Validate Booking Information
-Scope: INNsight Hotel Booking System
-Level: Sub-Function
-Primary Actor: AI Receptionist System
-Stakeholders and Interests: Customer, Admin, AI Receptionist System
+Use Case Name:                    Validate Booking Information
+Scope:                            INNsight Hotel Booking System
+Level:                            User-Goal
+Primary Actor:                    AI Receptionist System
+Stakeholders and Interests:       Customer, Admin
 
 Main Success Scenario
-Actor Action                                          | System Response
-------------------------------------------------------|------------------------------------------------------
-                                                      | 1. BookingService.createBooking(request) is invoked
-                                                      |    with a BookingRequest DTO
-                                                      | 2. System calls LocalDate.parse() on checkInDate
-                                                      |    and checkOutDate strings to validate format
-                                                      | 3. System calls RoomService.findByRoomNumber()
-                                                      |    which invokes RoomRepository.findByRoomNumber()
-                                                      | 4. System checks that the returned Room is
-                                                      |    not null (room exists in the database)
-                                                      | 5. System calls room.isAvailable() to confirm
-                                                      |    the room has not already been booked
-                                                      | 6. System validates that checkOutDate is after
-                                                      |    checkInDate
-                                                      | 7. All validations pass; booking details are
-                                                      |    forwarded to UC-08: Update Reservation Database
-8. Booking is created with CONFIRMED status           |
+Actor Action                                    | System Response
+------------------------------------------------|------------------------------------------------
+System receives booking details from customer   | System checks that the room exists
+                                                | System verifies the room is available
+                                                | System confirms the dates are valid
+                                                | System confirms the guest name is provided
+System reports that all details are valid       | Booking process continues
 
 Extensions
-1. Room not found -> RoomRepository.findByRoomNumber() returns empty Optional ->
-   BookingService throws IllegalArgumentException("Room not found") ->
-   ChatbotService catches and returns "Booking failed: Room not found"
-2. Room unavailable -> room.isAvailable() returns false ->
-   BookingService throws IllegalArgumentException("Room <num> is not available") ->
-   System returns error message to customer
-3. Invalid date format -> LocalDate.parse() throws DateTimeParseException ->
-   System returns "Booking failed: Invalid date format. Use YYYY-MM-DD."
-4. Check-out not after check-in -> validation fails ->
-   System returns appropriate date range error message
+1. Room does not exist -> System informs the customer and asks for a different room
+2. Room is already booked -> System suggests available rooms
+3. Dates are invalid -> System asks the customer to re-enter dates
 
 Pre-conditions
-- Booking details have been extracted from the user's message (UC-05 or UC-09)
-- A BookingRequest DTO with guestName, roomNumber, checkInDate, checkOutDate is available
+Booking details have been provided by the customer
 
 Post-conditions
-- All booking fields are confirmed valid
-- Room is confirmed to exist and be available
-- Processing continues to UC-08: Update Reservation Database
+Booking information is validated or errors are reported to the customer
